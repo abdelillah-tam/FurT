@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "700943482371",
+    "project_id": "furt-8aeaa",
+    "storage_bucket": "furt-8aeaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700943482371:android:048e996613388b1fd35836",
+        "android_client_info": {
+          "package_name": "com.furt.app.furt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700943482371-choakkinj6q6n8ojkmgm8597lq67cfm7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIjaVP88dIvgvEOqfe7bc1pTrTwzs3IHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700943482371-choakkinj6q6n8ojkmgm8597lq67cfm7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
