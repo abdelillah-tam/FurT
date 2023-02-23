@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/furt/furt.iml" filepath="$PROJECT_DIR$/furt/furt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/furt/android/furt_android.iml" filepath="$PROJECT_DIR$/furt/android/furt_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/furt.iml" filepath="$PROJECT_DIR$/furt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/furt_android.iml" filepath="$PROJECT_DIR$/android/furt_android.iml" />
     </modules>
   </component>
 </project>
