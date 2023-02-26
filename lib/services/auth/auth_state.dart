@@ -41,3 +41,16 @@ class AuthStateLoggedOut extends AuthState with EquatableMixin {
   @override
   List<Object?> get props => [exception, isLoading];
 }
+
+class AuthStateRegisterState extends AuthState {
+  final Exception? exception;
+
+  const AuthStateRegisterState({
+    required this.exception,
+    required isLoading,
+    String? loadingText,
+  }) : super(
+          isLoading: isLoading,
+          loadingText: loadingText,
+        );
+}

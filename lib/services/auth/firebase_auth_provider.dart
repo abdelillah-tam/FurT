@@ -6,7 +6,7 @@ import 'package:furt/services/auth/auth_user.dart';
 
 import 'auth_exceptions.dart';
 
-class FirebaseAuthProvider extends AuthProvider {
+class FirebaseAuthProvider implements AuthProvider {
   @override
   AuthUser? get currentUser {
     final user = FirebaseAuth.instance.currentUser;
@@ -52,6 +52,45 @@ class FirebaseAuthProvider extends AuthProvider {
       }
     } catch (e) {
       throw GenericAuthException();
+    }
+  }
+
+  @override
+  Future<AuthUser> register({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      final user = currentUser;
+      if (user != null) {
+        return user;
+      } else {
+        throw UserNotLoggedInAuthException();
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        throw EmailAlreadyInUseAuthException();
+      } else if (e.code == 'invalid-email') {
+        throw InvalidEmailAuthException();
+      } else if (e.code == 'weak-password') {
+        throw WeakPasswordAuthException();
+      } else {
+        throw GenericAuthException();
+      }
+    } catch (e) {
+      throw GenericAuthException();
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      FirebaseAuth.instance.signOut();
+    } else {
+      throw UserNotLoggedInAuthException();
     }
   }
 }
