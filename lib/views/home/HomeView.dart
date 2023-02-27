@@ -30,7 +30,6 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    //final double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         body: allWidgets[selectedIndex],
