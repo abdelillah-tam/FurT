@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furt/services/auth/auth_cubit.dart';
 import 'package:furt/services/auth/auth_state.dart';
 import 'package:furt/services/auth/firebase_auth_provider.dart';
-import 'package:furt/views/HomeView.dart';
+import 'package:furt/views/home/HomeView.dart';
 import 'package:furt/views/LoginView.dart';
 import 'package:furt/views/RegisterView.dart';
 
@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
         } else if (state is AuthStateRegisterState) {
           return const RegisterView();
         } else if (state is AuthStateLoggedIn){
-          return const HomeView();
+          return const MainView();
         }else {
           return const Scaffold(
             body: CircularProgressIndicator(),

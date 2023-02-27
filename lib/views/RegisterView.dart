@@ -56,7 +56,8 @@ class _RegisterViewState extends State<RegisterView> {
                             hintText: 'First Name',
                             hintStyle: const TextStyle(fontSize: 13.0),
                             isDense: false,
-                            contentPadding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                            contentPadding:
+                                const EdgeInsets.only(left: 12.0, right: 12.0),
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Color.fromRGBO(205, 24, 79, 1.0),
@@ -88,7 +89,8 @@ class _RegisterViewState extends State<RegisterView> {
                               hintText: 'Last Name',
                               hintStyle: const TextStyle(fontSize: 13.0),
                               isDense: false,
-                              contentPadding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                              contentPadding: const EdgeInsets.only(
+                                  left: 12.0, right: 12.0),
                               focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Color.fromRGBO(205, 24, 79, 1.0),
@@ -120,7 +122,8 @@ class _RegisterViewState extends State<RegisterView> {
                         hintText: 'Enter Your Email',
                         hintStyle: const TextStyle(fontSize: 13.0),
                         isDense: false,
-                        contentPadding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        contentPadding:
+                            const EdgeInsets.only(left: 12.0, right: 12.0),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color.fromRGBO(205, 24, 79, 1.0),
@@ -150,7 +153,8 @@ class _RegisterViewState extends State<RegisterView> {
                         hintText: 'Create a New Password',
                         hintStyle: const TextStyle(fontSize: 13.0),
                         isDense: false,
-                        contentPadding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        contentPadding:
+                            const EdgeInsets.only(left: 12.0, right: 12.0),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color.fromRGBO(205, 24, 79, 1.0),
@@ -180,7 +184,8 @@ class _RegisterViewState extends State<RegisterView> {
                       hintText: 'Rewrite Your Password',
                       hintStyle: const TextStyle(fontSize: 13.0),
                       isDense: false,
-                      contentPadding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                      contentPadding:
+                          const EdgeInsets.only(left: 12.0, right: 12.0),
                       focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Color.fromRGBO(205, 24, 79, 1.0),
