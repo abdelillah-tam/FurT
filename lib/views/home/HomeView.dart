@@ -160,9 +160,6 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
             Align(
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-              ),
             )
           ],
         ),
