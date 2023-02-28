@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:furt/views/AccountView.dart';
 import 'package:furt/views/CartView.dart';
 import 'package:furt/views/Favourite.dart';
+import 'package:furt/views/home/CategoryItemView.dart';
 import 'package:furt/views/home/Destination.dart';
 
 class MainView extends StatefulWidget {
@@ -77,11 +78,34 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
+class Category {
+  final String title;
+  bool exp;
+
+  Category({required this.title, required this.exp});
+}
+
 class _HomeViewState extends State<HomeView> {
   late final TextEditingController _searchController;
+  late List<CategoryItemView> categories;
+
+  int _size = 2;
+  bool showMore = false;
 
   @override
   void initState() {
+    categories = [
+      const CategoryItemView(
+          categoryTitle: 'Tables', categoryImagePath: 'assets/tables.jpg'),
+      const CategoryItemView(
+          categoryTitle: 'Chairs', categoryImagePath: 'assets/chairs.jpg'),
+      const CategoryItemView(
+          categoryTitle: 'Sofas', categoryImagePath: 'assets/sofas.jpg'),
+      const CategoryItemView(
+          categoryTitle: 'Bed', categoryImagePath: 'assets/bed.jpg'),
+      const CategoryItemView(
+          categoryTitle: 'Dresser', categoryImagePath: 'assets/dresser.jpg'),
+    ];
     _searchController = TextEditingController();
     super.initState();
   }
@@ -152,15 +176,51 @@ class _HomeViewState extends State<HomeView> {
                 ],
               ),
             ),
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                'Categories',
-                style: TextStyle(fontWeight: FontWeight.bold),
+            Padding(
+              padding: EdgeInsets.only(top: 16.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Categories',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          showMore = showMore ? false : true;
+                          _size = showMore ? categories.length : 2;
+                        });
+                      },
+                      child: Text(showMore ? 'Show Less' : 'Show More'),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Align(
-            )
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Wrap(
+                    children: [
+                      GridView.count(
+                        crossAxisCount: 5,
+                        childAspectRatio: 0.6,
+                        shrinkWrap: true,
+                        children: List.generate(
+                          _size,
+                          (index) => Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: categories[index],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ),
           ],
         ),
       ),
