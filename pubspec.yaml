@@ -42,6 +42,7 @@ dependencies:
   bloc: ^8.1.1
   equatable: ^2.0.5
   provider: ^6.0.5
+  cloud_firestore: ^4.4.3
 
 dev_dependencies:
   flutter_test:
@@ -67,11 +68,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/tables.jpg
-   - assets/chairs.jpg
-   - assets/sofas.jpg
-   - assets/bed.jpg
-   - assets/dresser.jpg
+   - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

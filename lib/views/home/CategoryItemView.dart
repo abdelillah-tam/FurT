@@ -15,10 +15,10 @@ class CategoryItemView extends StatelessWidget {
       children: [
         Container(
           height: (height >= 480 && height < 720
-              ? 60.0
+              ? 50.0
               : 70.0),
           width: (height >= 480 && height < 720
-              ? 60.0
+              ? 50.0
               : 70.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -30,7 +30,7 @@ class CategoryItemView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top:16.0),
-          child: Text(categoryTitle, style: const TextStyle(fontWeight: FontWeight.w500),),
+          child: Text(categoryTitle, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13.0),),
         ),
       ],
     );
