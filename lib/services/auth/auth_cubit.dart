@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:furt/services/auth/auth_provider.dart';
 import 'package:furt/services/auth/auth_state.dart';
@@ -37,11 +35,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void signUp({required String email, required String password}) async {
+  void signUp(
+      {required String firstName,
+      required String lastName,
+      required String email,
+      required String password}) async {
     try {
       emit(const AuthStateRegisterState(
           exception: null, isLoading: true, loadingText: 'Signing up ...'));
-      await provider.register(email: email, password: password);
+      await provider.register(
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password);
       emit(const AuthStateRegisterState(exception: null, isLoading: false));
       final user = await provider.logIn(email: email, password: password);
       emit(AuthStateLoggedIn(user: user, isLoading: false));

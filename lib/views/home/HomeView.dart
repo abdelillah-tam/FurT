@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furt/services/product/product_cubit.dart';
 import 'package:furt/services/product/product_state.dart';
@@ -93,28 +94,31 @@ class Categories {
 class _HomeViewState extends State<HomeView> {
   late final TextEditingController _searchController;
   late List<CategoryItemView> categories;
-  late List<Product> products;
+  List<ProductItemView> products = List.empty();
 
+  late Category currentCategory;
   int _size = 5;
   bool showMore = false;
 
   @override
   void initState() {
+    context.read<ProductCubit>().fetchProducts(Category.tables);
+    currentCategory = Category.tables;
     categories = [
       const CategoryItemView(
-          categoryTitle: 'Tables', categoryImagePath: 'assets/tables.jpg'),
+          category: Category.tables, categoryImagePath: 'assets/tables.jpg'),
       const CategoryItemView(
-          categoryTitle: 'Chairs', categoryImagePath: 'assets/chairs.jpg'),
+          category: Category.chairs, categoryImagePath: 'assets/chairs.jpg'),
       const CategoryItemView(
-          categoryTitle: 'Sofas', categoryImagePath: 'assets/sofas.jpg'),
+          category: Category.sofas, categoryImagePath: 'assets/sofas.jpg'),
       const CategoryItemView(
-          categoryTitle: 'Bed', categoryImagePath: 'assets/bed.jpg'),
+          category: Category.bed, categoryImagePath: 'assets/bed.jpg'),
       const CategoryItemView(
-          categoryTitle: 'Dresser', categoryImagePath: 'assets/dresser.jpg'),
+          category: Category.dressers, categoryImagePath: 'assets/dresser.jpg'),
       const CategoryItemView(
-          categoryTitle: 'Lighting', categoryImagePath: 'assets/lighting.jpg'),
+          category: Category.lighting,
+          categoryImagePath: 'assets/lighting.jpg'),
     ];
-    products = List.empty();
     _searchController = TextEditingController();
     super.initState();
   }
@@ -122,149 +126,177 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    context.read<ProductCubit>().fetchProducts(Category.tables);
-    return BlocListener<ProductCubit, ProductState>(
-      listener: (context, state) {
+
+    return BlocConsumer<ProductCubit, ProductState>(
+      listener: (newContext, state) {
         if (state is ProductStateFetching) {
-          if (state.products.isNotEmpty) {
-            setState(() {
-              products = state.products;
-            });
+          products = state.products
+              .map((e) => ProductItemView(product: e, exist: false))
+              .toList();
+
+          for (var element in state.products) {
+            context
+                .read<ProductCubit>()
+                .checkIfExistInFavourite(element.productId);
           }
+        } else if (state is ProductStateExistInShopCart) {
+          var oldProduct = products.firstWhere(
+              (element) => element.product.productId == state.productId);
+          var newProduct =
+              ProductItemView(product: oldProduct.product, exist: state.exist);
+          final indexOfOldProduct = products.indexOf(oldProduct);
+          products.removeAt(indexOfOldProduct);
+          products.insert(indexOfOldProduct, newProduct);
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          title: const Text(
-            'Home',
-            style: TextStyle(color: Colors.black, fontSize: 16.0),
-          ),
-          centerTitle: true,
+      builder: (newContext, state) {
+        return Scaffold(
           backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.circle_notifications_rounded),
-              color: const Color.fromRGBO(205, 24, 79, 1.0),
-              iconSize: 35.0,
+          appBar: AppBar(
+            elevation: 0.0,
+            title: const Text(
+              'Home',
+              style: TextStyle(color: Colors.black, fontSize: 16.0),
             ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                pinned: true,
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                flexibleSpace: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _searchController,
-                        cursorColor: const Color.fromRGBO(205, 24, 79, 1.0),
-                        style: const TextStyle(fontSize: 13.0),
-                        decoration: InputDecoration(
-                          hintText: 'Search Here',
-                          hintStyle: const TextStyle(fontSize: 13.0),
-                          isDense: false,
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(6.0),
-                            ),
-                          ),
-                          contentPadding:
-                              const EdgeInsets.only(left: 12.0, right: 12.0),
-                          focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromRGBO(205, 24, 79, 1.0),
-                                  width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(6.0))),
-                          prefixIcon: const Icon(Icons.search_rounded),
-                          prefixIconColor: Colors.black,
-                          constraints: BoxConstraints(
-                              maxHeight: (height >= 480 && height < 720
-                                  ? 40.0
-                                  : 60.0)),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.filter_list_rounded)),
-                  ],
-                ),
-              ),
-              SliverAppBar(
-                backgroundColor: Colors.white,
-                titleSpacing: 0.0,
-                title: const Text(
-                  'Categories',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      setState(
-                        () {
-                          showMore = showMore ? false : true;
-                          _size = showMore ? categories.length : 5;
-                        },
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      foregroundColor: const Color.fromRGBO(205, 24, 79, 0.0),
-                    ),
-                    child: Text(
-                      showMore ? 'Show Less' : 'Show More',
-                      style: const TextStyle(
-                          color: Color.fromRGBO(113, 113, 113, 1.0)),
-                    ),
-                  ),
-                ],
-              ),
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return categories[index];
-                  },
-                  childCount: _size,
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  childAspectRatio: 0.6,
-                ),
-              ),
-              SliverPersistentHeader(
-                delegate: Delegate(title: 'Items'),
-                pinned: true,
-                floating: false,
-              ),
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return ProductItemView(
-                      productTitle: products[index].productTitle,
-                    );
-                  },
-                  childCount: products.length,
-                ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.circle_notifications_rounded),
+                color: const Color.fromRGBO(205, 24, 79, 1.0),
+                iconSize: 35.0,
               ),
             ],
           ),
-        ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  pinned: true,
+                  elevation: 0.0,
+                  backgroundColor: Colors.white,
+                  flexibleSpace: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          cursorColor: const Color.fromRGBO(205, 24, 79, 1.0),
+                          style: const TextStyle(fontSize: 13.0),
+                          decoration: InputDecoration(
+                            hintText: 'Search Here',
+                            hintStyle: const TextStyle(fontSize: 13.0),
+                            isDense: false,
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6.0),
+                              ),
+                            ),
+                            contentPadding:
+                                const EdgeInsets.only(left: 12.0, right: 12.0),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromRGBO(205, 24, 79, 1.0),
+                                    width: 2.0),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(6.0))),
+                            prefixIcon: const Icon(Icons.search_rounded),
+                            prefixIconColor: Colors.black,
+                            constraints: BoxConstraints(
+                                maxHeight: (height >= 480 && height < 720
+                                    ? 40.0
+                                    : 60.0)),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.filter_list_rounded)),
+                    ],
+                  ),
+                ),
+                SliverAppBar(
+                  backgroundColor: Colors.white,
+                  titleSpacing: 0.0,
+                  title: const Text(
+                    'Categories',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        setState(
+                          () {
+                            showMore = showMore ? false : true;
+                            _size = showMore ? Category.values.length : 5;
+                          },
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: const Color.fromRGBO(205, 24, 79, 0.0),
+                      ),
+                      child: Text(
+                        showMore ? 'Show Less' : 'Show More',
+                        style: const TextStyle(
+                            color: Color.fromRGBO(113, 113, 113, 1.0)),
+                      ),
+                    ),
+                  ],
+                ),
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          context
+                              .read<ProductCubit>()
+                              .fetchProducts(categories[index].category);
+                        },
+                        child: categories[index],
+                      );
+                    },
+                    childCount: _size,
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 0.6,
+                  ),
+                ),
+                SliverPersistentHeader(
+                  delegate: Delegate(title: 'Items'),
+                  pinned: true,
+                  floating: false,
+                ),
+                SliverGrid.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.5,
+                    crossAxisSpacing: 16.0,
+                    mainAxisSpacing: 16.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed('/details', arguments: products[index]);
+                      },
+                      child: products[index],
+                    );
+                  },
+                  itemCount: products.length,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      buildWhen: (previousState, currentState) =>
+          currentState is ProductStateExistInShopCart,
     );
   }
 }

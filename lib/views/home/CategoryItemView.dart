@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:furt/services/product/product.dart';
 
 class CategoryItemView extends StatelessWidget {
   const CategoryItemView(
-      {Key? key, required this.categoryTitle, required this.categoryImagePath})
+      {Key? key, required this.category, required this.categoryImagePath})
       : super(key: key);
 
-  final String categoryTitle;
+  final Category category;
   final String categoryImagePath;
 
   @override
@@ -30,7 +31,7 @@ class CategoryItemView extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(top:16.0),
-          child: Text(categoryTitle, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13.0),),
+          child: Text(category.name, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13.0),),
         ),
       ],
     );

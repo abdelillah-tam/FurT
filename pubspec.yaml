@@ -43,6 +43,7 @@ dependencies:
   equatable: ^2.0.5
   provider: ^6.0.5
   cloud_firestore: ^4.4.3
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

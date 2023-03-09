@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:furt/constants/firestore_constants.dart';
 
 import 'package:furt/services/auth/auth_provider.dart';
 import 'package:furt/services/auth/auth_user.dart';
@@ -57,12 +59,19 @@ class FirebaseAuthProvider implements AuthProvider {
 
   @override
   Future<AuthUser> register({
+    required String firstName,
+    required String lastName,
     required String email,
     required String password,
   }) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseFirestore.instance.collection('users').doc(email).set({
+        userFirstNameField: firstName,
+        userLastNameField: lastName,
+        userEmailField: email,
+      });
       final user = currentUser;
       if (user != null) {
         return user;

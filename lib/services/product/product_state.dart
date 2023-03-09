@@ -21,3 +21,13 @@ class ProductStateFetching extends ProductState {
     String? fetchingText,
   }) : super(isFetchingProducts: isFetching, fetchingText: fetchingText);
 }
+
+class ProductStateExistInShopCart extends ProductState {
+  final bool exist;
+  final String productId;
+
+  const ProductStateExistInShopCart(
+      {required this.exist, required this.productId,required bool isFetching})
+      : super(isFetchingProducts: false);
+}
+

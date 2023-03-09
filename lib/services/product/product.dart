@@ -4,6 +4,7 @@ import 'package:furt/constants/firestore_constants.dart';
 
 @immutable
 class Product {
+  final String productId;
   final String productTitle;
   final String productCategory;
   final String productDescription;
@@ -12,6 +13,7 @@ class Product {
   final String productImageUrl;
 
   const Product({
+    required this.productId,
     required this.productTitle,
     required this.productCategory,
     required this.productDescription,
@@ -22,7 +24,8 @@ class Product {
 
   Product.fromFirebase(
       QueryDocumentSnapshot<Map<String, dynamic>> queryDocumentSnapshot)
-      : productTitle = queryDocumentSnapshot.data()[productTitleField],
+      : productId = queryDocumentSnapshot.data()[productIdField],
+        productTitle = queryDocumentSnapshot.data()[productTitleField],
         productCategory = queryDocumentSnapshot.data()[productCategoryField],
         productDescription =
             queryDocumentSnapshot.data()[productDescriptionField],
