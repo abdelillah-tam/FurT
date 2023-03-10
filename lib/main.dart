@@ -6,10 +6,10 @@ import 'package:furt/services/auth/auth_state.dart';
 import 'package:furt/services/auth/firebase_auth_provider.dart';
 import 'package:furt/services/product/firestore_product_provider.dart';
 import 'package:furt/services/product/product_cubit.dart';
-import 'package:furt/views/DetailsView.dart';
-import 'package:furt/views/home/HomeView.dart';
-import 'package:furt/views/LoginView.dart';
-import 'package:furt/views/RegisterView.dart';
+import 'package:furt/views/details_view.dart';
+import 'package:furt/views/home/home_view.dart';
+import 'package:furt/views/login_view.dart';
+import 'package:furt/views/register_view.dart';
 
 void main() {
   final AuthCubit _authCubit = AuthCubit(provider: FirebaseAuthProvider());

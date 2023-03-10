@@ -3,13 +3,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furt/services/product/product_cubit.dart';
 import 'package:furt/services/product/product_state.dart';
-import 'package:furt/views/AccountView.dart';
-import 'package:furt/views/CartView.dart';
+import 'package:furt/views/account_view.dart';
+import 'package:furt/views/cart_view.dart';
 import 'package:furt/services/product/product.dart';
-import 'package:furt/views/Favourite.dart';
-import 'package:furt/views/home/CategoryItemView.dart';
-import 'package:furt/views/home/Destination.dart';
-import 'package:furt/views/home/ProductItemView.dart';
+import 'package:furt/views/details_view.dart';
+import 'package:furt/views/favourite_view.dart';
+import 'package:furt/views/home/category_item_view.dart';
+import 'package:furt/views/home/destination.dart';
+import 'package:furt/views/home/product_item_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
@@ -282,8 +283,11 @@ class _HomeViewState extends State<HomeView> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context)
-                            .pushNamed('/details', arguments: products[index]);
+                        Navigator.of(context).pushNamed('/details',
+                            arguments: DetailsArgument(
+                              product: products[index].product,
+                              exist: products[index].exist,
+                            ));
                       },
                       child: products[index],
                     );

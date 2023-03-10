@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furt/services/product/product_cubit.dart';
-import 'package:furt/views/home/ProductItemView.dart';
+import 'package:furt/views/home/product_item_view.dart';
 import '../services/product/product_state.dart';
 
 class FavouriteView extends StatefulWidget {
