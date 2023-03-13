@@ -27,7 +27,23 @@ class ProductStateExistInShopCart extends ProductState {
   final String productId;
 
   const ProductStateExistInShopCart(
-      {required this.exist, required this.productId,required bool isFetching})
+      {required this.exist, required this.productId, required bool isFetching})
       : super(isFetchingProducts: false);
 }
 
+class ProductStateAddedToShopcart extends ProductState {
+  final bool added;
+  final String? addedTextForAlert;
+  final Product? updatedProduct;
+  final String? productId;
+
+  const ProductStateAddedToShopcart(
+      {required this.added,
+      required bool isFetching,
+      required this.addedTextForAlert,
+      this.updatedProduct,
+      this.productId})
+      : super(
+          isFetchingProducts: isFetching,
+        );
+}

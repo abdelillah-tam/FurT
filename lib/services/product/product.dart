@@ -22,7 +22,7 @@ class Product {
     required this.productImageUrl,
   });
 
-  Product.fromFirebase(
+  Product.fromFirebaseQueryDocumentSnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> queryDocumentSnapshot)
       : productId = queryDocumentSnapshot.data()[productIdField],
         productTitle = queryDocumentSnapshot.data()[productTitleField],
@@ -32,6 +32,16 @@ class Product {
         productPrice = queryDocumentSnapshot.data()[productPriceField],
         productQuantity = queryDocumentSnapshot.data()[productQuantityField],
         productImageUrl = queryDocumentSnapshot.data()[productImageUrlField];
+
+  Product.fromFirebaseDocumentSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot)
+      : productId = documentSnapshot.data()?[productIdField],
+        productTitle = documentSnapshot.data()?[productTitleField],
+        productCategory = documentSnapshot.data()?[productCategoryField],
+        productDescription = documentSnapshot.data()?[productDescriptionField],
+        productPrice = documentSnapshot.data()?[productPriceField],
+        productQuantity = documentSnapshot.data()?[productQuantityField],
+        productImageUrl = documentSnapshot.data()?[productImageUrlField];
 }
 
 enum Category { tables, chairs, sofas, bed, dressers, lighting }

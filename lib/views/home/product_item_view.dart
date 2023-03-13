@@ -100,7 +100,11 @@ class _ProductItemViewState extends State<ProductItemView> {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         alignment: Alignment.center,
-                        onPressed: () {},
+                        onPressed: () {
+                          context
+                              .read<ProductCubit>()
+                              .addToShopCart(product: widget.product);
+                        },
                         icon: Icon(
                           Icons.shopping_cart_rounded,
                           size: (height >= 480 && height < 720 ? 8.0 : 12.0),

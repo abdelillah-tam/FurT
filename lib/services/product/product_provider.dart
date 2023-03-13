@@ -1,6 +1,6 @@
 import 'package:furt/services/product/product.dart';
 
-abstract class ProductProvider{
+abstract class ProductProvider {
   Future<List<Product>> getProducts(Category category);
 
   Future<List<Product>> getProductsInFavourite();
@@ -10,4 +10,15 @@ abstract class ProductProvider{
   Future<bool> checkIfExistInFavourite(String productId);
 
   Future<bool> deleteFromFavourite(String productId);
+
+  Future<Product?> addToShopCart(Product product, int quantity);
+
+  Future<bool> checkIfExistInShopCart(String productId);
+
+  Future<List<Product>> getProductsExistInShopCart();
+
+  Future<bool> deleteFromShopCart(Product productId);
+
+  Future<Product?> increaseQuantity(Product productId);
+  Future<Product?> decreaseQuantity(Product productId);
 }

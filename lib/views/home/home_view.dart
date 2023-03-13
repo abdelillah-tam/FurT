@@ -148,6 +148,20 @@ class _HomeViewState extends State<HomeView> {
           final indexOfOldProduct = products.indexOf(oldProduct);
           products.removeAt(indexOfOldProduct);
           products.insert(indexOfOldProduct, newProduct);
+        } else if (state is ProductStateAddedToShopcart) {
+          if (state.added && state.updatedProduct != null) {
+            var oldProduct = products.firstWhere(
+                (element) => element.product.productId == state.updatedProduct!.productId);
+            var newProduct = ProductItemView(
+                product: state.updatedProduct!, exist: oldProduct.exist);
+            final indexOfOldProduct = products.indexOf(oldProduct);
+            products.removeAt(indexOfOldProduct);
+
+            setState(() {
+              products.insert(indexOfOldProduct, newProduct);
+            });
+
+          }
         }
       },
       builder: (newContext, state) {
