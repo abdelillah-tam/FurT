@@ -107,18 +107,18 @@ class _HomeViewState extends State<HomeView> {
     currentCategory = Category.tables;
     categories = [
       const CategoryItemView(
-          category: Category.tables, categoryImagePath: 'assets/tables.jpg'),
+          category: Category.tables, categoryImagePath: 'assets/images/tables.jpg'),
       const CategoryItemView(
-          category: Category.chairs, categoryImagePath: 'assets/chairs.jpg'),
+          category: Category.chairs, categoryImagePath: 'assets/images/chairs.jpg'),
       const CategoryItemView(
-          category: Category.sofas, categoryImagePath: 'assets/sofas.jpg'),
+          category: Category.sofas, categoryImagePath: 'assets/images/sofas.jpg'),
       const CategoryItemView(
-          category: Category.bed, categoryImagePath: 'assets/bed.jpg'),
+          category: Category.bed, categoryImagePath: 'assets/images/bed.jpg'),
       const CategoryItemView(
-          category: Category.dressers, categoryImagePath: 'assets/dresser.jpg'),
+          category: Category.dressers, categoryImagePath: 'assets/images/dresser.jpg'),
       const CategoryItemView(
           category: Category.lighting,
-          categoryImagePath: 'assets/lighting.jpg'),
+          categoryImagePath: 'assets/images/lighting.jpg'),
     ];
     _searchController = TextEditingController();
     super.initState();
